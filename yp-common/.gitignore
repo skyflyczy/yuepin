@@ -1,0 +1,12 @@
+/build/
+/.metadata
+/RemoteSystemsTempFiles
+/.idea
+/log
+*.iml
+*.sh
+/test.xml
+*.project
+*.classpath
+/.settings
+/bin/

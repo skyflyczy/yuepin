@@ -1,0 +1,6 @@
+rootProject.name = 'yuepin'
+include 'yp-mixserver'
+include 'yp-tradeserver'
+include 'yp-publicweb'
+include 'yp-userserver'
+include 'yp-common'

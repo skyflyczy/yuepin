@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+		<title>登录</title>
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+
+        </style>
+    </head>
+  	<body>
+	<div id="wrap" class="">
+		<!-- 顶部 -->
+		<div class="header bg-fen">
+			<div class="box_690">
+				
+			<div class="title fs-36 cur-p">登录</div>	  				
+			<div class="help_bnt fs-28  cur-p">帮助</div>
+			</div>
+		</div>
+		<!-- 登录内容 -->
+		<div class="login_box bg-f5">
+			<form action="" class="validform">
+				<ul class="login_form box_690 pd30">
+					<li><input class="inp-w690 bor-ddd fs-30" type="text" placeholder="请输入您的账号" datatype="*3-16" nullmsg="请输入您的账号" errormsg="请输入正确的昵称,3-16位"></li>
+					<li><input class="inp-w690 bor-ddd fs-30" type="password" placeholder="请输入密码" datatype="*6-16" nullmsg="请输入密码" errormsg="请输入正确密码格式,6-16位"></li>
+					<li class="clearfix "><a href="#"><span class="fl col-999 fs-28">忘记密码</span></a><a href="#"><span class="fr col-999 fs-28">手机快捷登陆</span></a></li>
+					<li class="msg">
+						<span id="msgdome"></span>
+					</li>
+					<li class=""><button class="btn-w690 bor-red bor-rad5 fs-34 col-fff bg-red" type="" value="">登录</button></li>
+					<li class="reg"><a href="reg.html"><span class="btn-w690 bor-red bor-rad5 fs-34 col-red bg-f5 center ">我要注册</span></a></li>
+				</ul>
+			</form>
+			<div class="other_login">
+				<h5 class="other_tit "><span class="center bg-f5 col-999 fs-30">其他账号登录</span></h5>
+				<ul class="other_ico clearfix">
+					<li class="ico-all qq"></li>
+					<li class="ico-all wx"></li>
+					<li class="ico-all wb"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+  	</body>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/ind.js"></script>
+        <script type="text/javascript" src="js/Validform_v5.3.2_min.js"></script>
+<script>
+	$(function () {
+		    // 验证
+        $(".validform").Validform({
+            tiptype:function(msg,o,cssctl){
+                var objtip=$("#msgdome");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+        });
+	});
+</script>
+</html>

@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    sourceCompatibility = 1.7
+    group 'com.yp'
+    version '1.0-SNAPSHOT'
+
+    jar {
+        manifest {
+            attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+        }
+    }
+
+    repositories {
+        maven {
+            //mavenCentral()
+			url "//maven.aliyun.com/nexus/content/groups/public//"
+            url "http://repo2.maven.org/maven2/"
+           //url "http://123.56.207.117:8081/nexus/content/groups/public/"
+           url "http://nexus.cfaoe.com/nexus/content/groups/public/"
+			
+        }
+    }
+}

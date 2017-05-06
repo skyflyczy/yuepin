@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yp.user.dao.UserDao">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT INTO user (
+        	id ,
+        	userGuid ,
+        	phoneNo ,
+        	loginName ,
+        	password ,
+        	userName ,
+        	headPicId ,
+        	sex ,
+        	bornYear ,
+        	bornMonth ,
+        	degree ,
+        	signature ,
+        	provinceId ,
+        	cityId ,
+        	districtId ,
+        	levelId ,
+        	score ,
+        	createTime ,
+        	updateTime ,
+        	versionNo 
+        ) VALUES (
+        	#{id} ,
+        	#{userGuid} ,
+        	#{phoneNo} ,
+        	#{loginName} ,
+        	#{password} ,
+        	#{userName} ,
+        	#{headPicId} ,
+        	#{sex} ,
+        	#{bornYear} ,
+        	#{bornMonth} ,
+        	#{degree} ,
+        	#{signature} ,
+        	#{provinceId} ,
+        	#{cityId} ,
+        	#{districtId} ,
+        	#{levelId} ,
+        	#{score} ,
+        	now() ,
+        	#{updateTime} ,
+        	1 
+        )
+    ]]>
+    	<selectKey resultType="java.lang.Integer" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+	</insert>
+    
+	<update id="update">
+    <![CDATA[
+        UPDATE user SET
+	        userGuid = #{userGuid} ,
+	        phoneNo = #{phoneNo} ,
+	        loginName = #{loginName} ,
+	        password = #{password} ,
+	        userName = #{userName} ,
+	        headPicId = #{headPicId}
+	        sex = #{sex} ,
+	        bornYear = #{bornYear},
+        	bornMonth = #{bornMonth},
+        	degree = #{degree},
+	        signature = #{signature} ,
+	        provinceId = #{provinceId} ,
+	        cityId = #{cityId} ,
+	        districtId = #{districtId} ,
+	        levelId = #{levelId} ,
+	        score = #{score} ,
+	        createTime = #{createTime} ,
+	        updateTime = #{updateTime} ,
+	        versionNo = versionNo + 1
+        WHERE 
+	        id = #{id} and versionNo = #{versionNo}
+    ]]>
+	</update>
+
+    <delete id="delete" parameterType="java.util.Map">
+    <![CDATA[
+        DELETE FROM user WHERE
+        id = #{id} 
+    ]]>
+    </delete>
+    
+    <select id="getById" parameterType="java.util.Map" resultType="com.yp.common.vo.UserVo">
+    <![CDATA[
+    	SELECT *
+	    FROM user 
+        WHERE 
+	        id = #{id} 
+    ]]>
+	</select>
+	
+	<sql id="where">
+		<where>	      				
+	       <if test="@Ognl@isNotEmpty(id)">
+				AND id = #{id}
+			</if>
+	       <if test="@Ognl@isNotEmpty(userGuid)">
+				AND userGuid = #{userGuid}
+			</if>
+	       <if test="@Ognl@isNotEmpty(phoneNo)">
+				AND phoneNo = #{phoneNo}
+			</if>
+	       <if test="@Ognl@isNotEmpty(loginNameEqual)">
+				AND loginName = #{loginNameEqual}
+			</if>
+			<if test="@Ognl@isNotEmpty(loginName)">
+				AND loginName like '%'#{loginName}'%'
+			</if>
+	       <if test="@Ognl@isNotEmpty(password)">
+				AND password = #{password}
+			</if>
+	       <if test="@Ognl@isNotEmpty(userName)">
+				AND userName = #{userName}
+			</if>
+	       <if test="@Ognl@isNotEmpty(sex)">
+				AND sex = #{sex}
+			</if>
+	       <if test="@Ognl@isNotEmpty(signature)">
+				AND signature = #{signature}
+			</if>
+	       <if test="@Ognl@isNotEmpty(provinceId)">
+				AND provinceId = #{provinceId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(cityId)">
+				AND cityId = #{cityId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(districtId)">
+				AND districtId = #{districtId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(levelId)">
+				AND levelId = #{levelId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(score)">
+				AND score = #{score}
+			</if>
+	       <if test="@Ognl@isNotEmpty(createTimeBegin)">
+				AND createTime >= #{createTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(createTimeEnd)">
+				AND createTime &lt;= #{createTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+				AND updateTime >= #{updateTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+				AND updateTime &lt;= #{updateTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(versionNo)">
+				AND versionNo = #{versionNo}
+			</if>
+		</where>
+	</sql>
+
+    <select id="select" parameterType="java.util.Map" resultType="com.yp.common.vo.UserVo">
+    	SELECT *
+	    FROM user 
+		<include refid="where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+    
+</mapper>
+

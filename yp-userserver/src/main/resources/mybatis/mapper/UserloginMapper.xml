@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huajin.user.dao.UserloginDao">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_login (
+        	Id ,
+        	LoginName ,
+        	LoginType ,
+        	UserId ,
+        	FailNum ,
+        	SuccessNum ,
+        	FailNumLx ,
+        	SuccessNumLx ,
+        	PreLoginTime ,
+        	LastSuccessTime ,
+        	LastFailTime ,
+        	RetCode ,
+        	RetMsg ,
+        	UpdateTime 
+        ) VALUES (
+        	#{id} ,
+        	#{loginName} ,
+        	#{loginType} ,
+        	#{userId} ,
+        	#{failNum} ,
+        	#{successNum} ,
+        	#{failNumLx} ,
+        	#{successNumLx} ,
+        	#{preLoginTime} ,
+        	#{lastSuccessTime} ,
+        	#{lastFailTime} ,
+        	#{retCode} ,
+        	#{retMsg} ,
+        	#{updateTime} 
+        )
+    	<selectKey resultType="java.lang.Integer" keyProperty="id">
+            select LAST_INSERT_ID() as id
+        </selectKey>
+	</insert>
+    
+	<update id="update">
+        UPDATE user_login SET
+	        LoginName = #{loginName} ,
+	        LoginType = #{loginType} ,
+	        UserId = #{userId} ,
+	        FailNum = #{failNum} ,
+	        SuccessNum = #{successNum} ,
+	        FailNumLx = #{failNumLx} ,
+	        SuccessNumLx = #{successNumLx} ,
+	        PreLoginTime = #{preLoginTime} ,
+	        LastSuccessTime = #{lastSuccessTime} ,
+	        LastFailTime = #{lastFailTime} ,
+	        RetCode = #{retCode} ,
+	        RetMsg = #{retMsg} ,
+	        UpdateTime = #{updateTime} 
+        WHERE 
+	        Id = #{id} 
+	</update>
+
+    <select id="getByUserId" parameterType="java.lang.Integer" resultType="com.yp.common.vo.user.UserLoginVo">
+    	SELECT *
+	    FROM user_login 
+        WHERE 
+	        UserId = #{userId} 
+	</select>
+	
+	<sql id="where">
+		<where>	      				
+	       <if test="@Ognl@isNotEmpty(id)">
+				AND Id = #{id}
+			</if>
+	       <if test="@Ognl@isNotEmpty(loginName)">
+				AND LoginName = #{loginName}
+			</if>
+	       <if test="@Ognl@isNotEmpty(loginType)">
+				AND LoginType = #{loginType}
+			</if>
+	       <if test="@Ognl@isNotEmpty(userId)">
+				AND UserId = #{userId}
+			</if>
+	       <if test="@Ognl@isNotEmpty(failNum)">
+				AND FailNum = #{failNum}
+			</if>
+	       <if test="@Ognl@isNotEmpty(successNum)">
+				AND SuccessNum = #{successNum}
+			</if>
+	       <if test="@Ognl@isNotEmpty(failNumLx)">
+				AND FailNumLx = #{failNumLx}
+			</if>
+	       <if test="@Ognl@isNotEmpty(successNumLx)">
+				AND SuccessNumLx = #{successNumLx}
+			</if>
+	       <if test="@Ognl@isNotEmpty(preLoginTimeBegin)">
+				AND PreLoginTime >= #{preLoginTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(preLoginTimeEnd)">
+				AND PreLoginTime &lt;= #{preLoginTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(lastSuccessTimeBegin)">
+				AND LastSuccessTime >= #{lastSuccessTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(lastSuccessTimeEnd)">
+				AND LastSuccessTime &lt;= #{lastSuccessTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(lastFailTimeBegin)">
+				AND LastFailTime >= #{lastFailTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(lastFailTimeEnd)">
+				AND LastFailTime &lt;= #{lastFailTimeEnd}
+		   </if>
+	       <if test="@Ognl@isNotEmpty(retCode)">
+				AND RetCode = #{retCode}
+			</if>
+	       <if test="@Ognl@isNotEmpty(retMsg)">
+				AND RetMsg = #{retMsg}
+			</if>
+	       <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+				AND UpdateTime >= #{updateTimeBegin}
+		   </if>
+		   <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+				AND UpdateTime &lt;= #{updateTimeEnd}
+		   </if>
+		</where>
+	</sql>
+
+    <select id="select" parameterType="java.util.Map" resultType="com.yp.common.vo.user.UserLoginVo">
+    	SELECT *
+	    FROM user_login 
+		<include refid="where"/>
+		
+		<if test="@Ognl@isNotEmpty(sortColumns)">
+			ORDER BY ${sortColumns}
+		</if>
+    </select>
+</mapper>
+

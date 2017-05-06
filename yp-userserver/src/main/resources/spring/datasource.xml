@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task" xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+	>
+	
+    <context:property-placeholder location="classpath:conf/datasource.properties" ignore-unresolvable="true"/>
+	<util:properties id="configProps" location="classpath:conf/datasource.properties"/>
+
+    <bean id="parentDataSourceWrite" class="org.apache.commons.dbcp.BasicDataSource" abstract="true">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="initialSize" value="#{configProps['write.userserver.mysql.initialSize']}"/>
+        <property name="maxIdle" value="#{configProps['write.userserver.mysql.maxIdle']}"/>
+        <property name="minIdle" value="#{configProps['write.userserver.mysql.minIdle']}"/>
+        <property name="maxActive" value="#{configProps['write.userserver.mysql.maxActive']}"/>
+        <property name="maxWait" value="#{configProps['write.userserver.mysql.maxWait']}"/>
+        <property name="minEvictableIdleTimeMillis" value="#{configProps['write.userserver.mysql.minEvictableIdleTimeMillis']}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="#{configProps['write.userserver.mysql.timeBetweenEvictionRunsMillis']}"/>
+        <property name="poolPreparedStatements" value="false" />
+        <property name="removeAbandoned" value="#{configProps['write.userserver.mysql.removeAbandoned']}" />  <!-- 是否自动回收超时连接 -->
+        <property name="removeAbandonedTimeout"  value="#{configProps['write.userserver.mysql.removeAbandonedTimeout']}" />  <!-- 超时时间(以秒数为单位) -->
+        <property name="testWhileIdle" value="#{configProps['write.userserver.mysql.testWhileIdle']}" />    <!-- 打开检查,用异步线程evict进行检查 -->
+        <property name="testOnBorrow" value="#{configProps['write.userserver.mysql.testOnBorrow']}" />
+        <property name="testOnReturn" value="#{configProps['write.userserver.mysql.testOnReturn']}" />
+        <property name="validationQuery" value="#{configProps['write.userserver.mysql.validationQuery']}" />
+        <property name="numTestsPerEvictionRun" value="#{configProps['write.userserver.mysql.numTestsPerEvictionRun']}" />
+    </bean>
+
+    <!-- 写库数据库配置 -->
+    <bean id="dataSourceWrite" parent="parentDataSourceWrite">
+        <property name="url" value="#{configProps['write.userserver.mysql.url']}"/>
+        <property name="username" value="#{configProps['write.userserver.mysql.username']}" />
+        <property name="password" value="#{configProps['write.userserver.mysql.password']}" />
+    </bean>
+
+    <bean id="sessionFactoryWrite" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:/mybatis/mybatis-config-write.xml" />
+        <property name="dataSource" ref="dataSourceWrite" />
+         <property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml"/>
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceWrite" />
+    </bean>
+
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
+
+    <bean id="mapperScannerConfigurerTask" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactory"  ref="sessionFactoryWrite"/>
+        <property name="basePackage" value="com.yp.user.dao" />
+    </bean>
+
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+		<title>注册</title>
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+
+        </style>
+    </head>
+  	<body>
+	<div id="wrap" class="">
+	<!-- 顶部 -->
+		<div class="header bg-fen">
+			<div class="box_690">
+				<div class="go_back" onclick="history.go(-1)"><i class="ico-all"></i></div>
+				<div class="title fs-36 cur-p">注册</div>	  				
+				<div class="help_bnt fs-28  cur-p">帮助</div>
+			</div>
+		</div>
+	<!-- 注册内容 -->
+		<div class="login_box register_box">
+			<form action="" class="validform">
+				<ul class="login_form register_form box_690 pd30">
+					<li><input class="inp-w690 bor-ddd fs-30" type="text" placeholder="请输入手机号" datatype="m" nullmsg="请输入手机号码" errormsg="请输入正确的手机号码,11位"></li>
+					<!-- 短信验证码 -->
+					<li class="message_yzm por">
+						<input class="inp-w690 bor-ddd fs-30" type="password" placeholder="请输短信验证码" datatype="n6-6" nullmsg="请输短信验证码" errormsg="请输入正确的6为数字验证码">
+						<span class="btn-w220 dis-ind bor-red fs-28 col-red bor-rad5 center cur-p">获取验证码</span>
+					</li>
+					<!-- 图片验证码 -->
+					<!-- 
+						<li class="img_yzm por">
+							<input class="inp-w690 bor-ddd fs-30" type="password" placeholder="请输入图片验证码" datatype="s4-4" nullmsg="请输入图片验证码" errormsg="请输入4位的图片验证码">
+							<div class="img_box">
+								<img src="images/img_yzm.png" alt="">
+								<span class="fs-28 col-666 cur-p">换一张</span>
+							</div>
+						</li>
+					 -->
+					<li><input class="inp-w690 bor-ddd fs-30" type="password" placeholder="请输入密码"  value="" name="userpassword" class="inputxt" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！"></li>
+					<li><input class="inp-w690 bor-ddd fs-30" type="password" placeholder="请再输入一次密码！" value="" name="userpassword2" tip="test" class="inputxt" datatype="*" recheck="userpassword" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！" /></li>
+					<li class="reg_ixeyi"><input type="checkbox" class="inp-w32 por mgr5" id="register_xieyi"><label for="register_xieyi" class="fs-28">我已阅读并同意《厘购在线用户协议》</label></li>
+					<li class="msg"><span id="msgdome"></span></li>
+					<li class=""><button class="btn-w690 bor-red bor-rad5 fs-34 col-fff bg-red" type="" value="">注册</button></li>
+				</ul>
+			</form>
+			<div class="other_login">
+				<h5 class="other_tit "><span class="center bg-f5 col-999 fs-30">其他账号登录</span></h5>
+				<ul class="other_ico clearfix">
+					<li class="ico-all qq"></li>
+					<li class="ico-all wx"></li>
+					<li class="ico-all wb"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+  	</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ind.js"></script>
+<script type="text/javascript" src="js/Validform_v5.3.2_min.js"></script>
+<script>
+	$(function () {
+		    // 验证
+        $(".validform").Validform({
+            tiptype:function(msg,o,cssctl){
+                var objtip=$("#msgdome");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+            }
+        });
+	});
+</script>
+</html>

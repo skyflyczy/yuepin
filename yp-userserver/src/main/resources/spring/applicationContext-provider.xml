@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:property-placeholder location="classpath:conf/dubbo-provider.properties" ignore-unresolvable="true"/>
+
+    <dubbo:application name="userserver-provider"  organization="userserver"/>
+    <dubbo:registry address="${userserver-registry-address}" protocol="zookeeper" register="true"/>
+    <dubbo:protocol name="dubbo" port="${userserver-provider-port}"  accesslog="true" threads="${userserver-provider-threads}"/>
+    
+	<dubbo:service interface="com.yp.common.service.user.UserService" ref="userService" cluster="failfast " />
+	
+	<dubbo:annotation package="com.yp.user.service" />
+</beans>

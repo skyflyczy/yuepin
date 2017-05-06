@@ -1,0 +1,53 @@
+
+apply plugin: 'war'
+
+dependencies {
+	compile project(':yp-common')
+	
+	//dubbo
+	compile (group: 'com.alibaba', name: 'dubbo', version: '2.5.3'){
+        exclude (group: 'org.springframework')
+    }
+    compile (group: 'com.101tec', name: 'zkclient', version: '0.4')
+    
+    compile ("org.springframework:spring-webmvc:4.1.6.RELEASE")
+	compile ('org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-tomcat:1.3.3.RELEASE')
+    
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat:1.3.3.RELEASE')
+	providedRuntime('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.32')
+
+}
+
+project.libsDirName = 'libs/WEB-INF/lib'
+
+task copyWebNorConfig(type: Copy) {
+    into "$buildDir/libs/WEB-INF/classes/"
+    from "src/main/resources"
+}
+
+task copyToLib(dependsOn: configurations.runtime.buildDependencies, type: Copy) {
+    into "$buildDir/libs/WEB-INF/lib/"
+    from configurations.runtime
+}
+
+task copyWeb(type: Copy) {
+    into "$buildDir/libs/"
+    from "src/main/webapp"
+}
+
+task copyConfig(type: Copy) {
+    into "$buildDir/libs/WEB-INF/classes/"
+    from 'src/main/config/nor'
+    from 'src/main/config/' + target
+}
+
+copyConfig.dependsOn copyWebNorConfig
+
+project.jar.dependsOn copyWeb
+project.jar.dependsOn copyToLib
+project.jar.dependsOn copyConfig
+
+jar {
+    exclude '*.xml', '*.properties', 'config', 'META-INF'
+}
