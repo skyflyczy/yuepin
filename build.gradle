@@ -19,8 +19,8 @@ allprojects {
     repositories {
         maven {
             //mavenCentral()
-			url "//maven.aliyun.com/nexus/content/groups/public//"
-            url "http://repo2.maven.org/maven2/"
+			//url "//maven.aliyun.com/nexus/content/groups/public//"
+            //url "http://repo2.maven.org/maven2/"
            //url "http://123.56.207.117:8081/nexus/content/groups/public/"
            url "http://nexus.cfaoe.com/nexus/content/groups/public/"
 			

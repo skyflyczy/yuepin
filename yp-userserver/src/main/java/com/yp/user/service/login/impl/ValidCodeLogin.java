@@ -19,7 +19,7 @@ public class ValidCodeLogin extends LoginService {
 
 	@Override
 	public boolean isLoginType(LoginType loginType) {
-		return loginType == LoginType.手机号验证码;
+		return loginType == LoginType.手机号验证码登录;
 	}
 
 }

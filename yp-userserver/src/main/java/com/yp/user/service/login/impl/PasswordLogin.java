@@ -45,7 +45,7 @@ public class PasswordLogin extends LoginService {
 
 	@Override
 	public boolean isLoginType(LoginType loginType) {
-		return loginType == LoginType.手机号密码;
+		return loginType == LoginType.手机号密码登录;
 	}
 
 }

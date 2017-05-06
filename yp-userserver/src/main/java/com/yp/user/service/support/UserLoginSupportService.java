@@ -5,12 +5,10 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yp.common.db.user.UserDB;
 import com.yp.common.db.user.UserLoginDB;
 import com.yp.common.enums.ErrorCode;
 import com.yp.common.enums.user.LoginType;
 import com.yp.common.vo.user.UserLoginVo;
-import com.yp.common.vo.user.UserVo;
 import com.yp.user.service.datasupport.UserLoginDataSupport;
 
 @Service
@@ -19,16 +17,38 @@ public class UserLoginSupportService {
 	@Autowired
 	private UserLoginDataSupport userLoginDataSupport;
 	
-	
-	public void getLoginUser(UserVo user,String loginName,LoginType loginType) {
-		UserLoginVo userLogin = userLoginDataSupport.getUserLoginByUserId(user.getId());
+	/**
+	 * 获取用户登录记录
+	 * @param userId
+	 * @param loginName
+	 * @param loginType
+	 * @return
+	 * @author zhiya.chai
+	 */
+	public UserLoginVo getLoginUser(Integer userId,String loginName,LoginType loginType) {
+		UserLoginVo userLogin = userLoginDataSupport.getUserLoginByUserId(userId);
 		if(userLogin == null) {
-			insertUserLogin(user.getId(), loginName, loginType);
+			userLogin = insertUserLogin(userId, loginName, loginType);
 		}
-		
+		return userLogin;
 	}
-	
-	private UserLoginDB insertUserLogin(Integer userId,String loginName,LoginType loginType) {
+	/**
+	 * 更新登录用户信息
+	 * @param userLogin
+	 * @author zhiya.chai
+	 */
+	public void updateLoginUser(UserLoginVo userLogin) {
+		userLoginDataSupport.updateUserLogin(userLogin);
+	}
+	/**
+	 * 插入登录用户信息
+	 * @param userId
+	 * @param loginName
+	 * @param loginType
+	 * @return
+	 * @author zhiya.chai
+	 */
+	private UserLoginVo insertUserLogin(Integer userId,String loginName,LoginType loginType) {
 		UserLoginDB userLogin = new UserLoginDB();
 		userLogin.setFailNum(0);
 		userLogin.setFailNumLx(0);
@@ -42,6 +62,6 @@ public class UserLoginSupportService {
 		userLogin.setSuccessNumLx(1);
 		userLogin.setUserId(userId);
 		userLogin.setUpdateTime(new Date());
-		return userLogin;
+		return userLoginDataSupport.insertUserLogin(userLogin);
 	}
 }
