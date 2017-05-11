@@ -9,6 +9,7 @@ import com.yp.common.enums.ErrorCode;
 import com.yp.common.enums.user.LoginType;
 import com.yp.common.exception.ErrorCodeException;
 import com.yp.common.vo.user.LoginUser;
+import com.yp.common.vo.user.UserLoginVo;
 import com.yp.common.vo.user.UserVo;
 import com.yp.user.service.login.LoginService;
 import com.yp.user.service.support.UserSupportService;
@@ -29,11 +30,18 @@ public class PasswordLogin extends LoginService {
 		validPassword(loginUser.getPassword());
 		//获取用户信息
 		UserVo userVo = super.getUser(loginUser.getPhoneNo());
+		//验证用户登录信息
+		UserLoginVo userLoginVo = super.validLoginUser(userVo.getId(), loginUser.getPhoneNo(), LoginType.手机号密码登录);
 		//获取登录密码
 		String loginPassword = IrreversibEncrypt.MD5Encrypt(userVo.getSalt() + loginUser.getPassword());
 		if(!loginPassword.equals(userVo.getPassword())) {
+			loginFail("密码不正确", userLoginVo);
 			throw new ErrorCodeException(ErrorCode.USER_LOGIN_FAIL,"手机号或者密码不正确。");
 		}
+		//放入缓存
+		createLoginCache(loginUser.getSessionId(),userVo);
+		//登录成功
+		loginSuccess(userLoginVo);
 		return userVo;
 	}
 	

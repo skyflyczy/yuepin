@@ -252,4 +252,19 @@ public class DateTimeUtil {
         SimpleDateFormat format1 = getSimpDateFormat(format);
         return format1.parse(date);
     }
+    
+    /**
+	 * 增加或减少时间
+	 * 
+	 * @param date
+	 * @param field
+	 * @param value
+	 * @return
+	 */
+	public static Date add(Date date, int field, int value) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(field, value);
+		return c.getTime();
+	}
 }

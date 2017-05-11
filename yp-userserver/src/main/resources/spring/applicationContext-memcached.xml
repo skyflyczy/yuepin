@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+    ">
+
+	 <!-- cache连接池 -->
+	<bean id="memcachePool" class="com.yp.common.memcache.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown">
+		<constructor-arg>
+			<value>${mc.poolname}</value>
+		</constructor-arg>
+		<property name="servers" value="${mc.servers}">
+		</property>
+		<property name="initConn">
+			<value>${mc.initconn}</value>
+		</property>
+		<property name="minConn">
+			<value>${mc.minconn}</value>
+		</property>
+		<property name="maxConn">
+			<value>${mc.maxconn}</value>
+		</property>
+                <property name="aliveCheck">
+                        <value>${mc.alivecheck}</value>
+                </property>
+		<property name="maintSleep">
+			<value>${mc.maintsleep}</value>
+		</property>
+		<property name="nagle">
+			<value>${mc.nagle}</value>
+		</property>
+		<property name="socketTO">
+			<value>${mc.sockettimeout}</value>
+		</property>
+		 <property name="hashingAlg"><value>${mc.hashingAlg}</value></property>
+	</bean>
+	<!-- memcache -->
+	<bean id="memcachedCache" class="com.yp.common.memcache.client.MemcachedCacheCloudImpl">  
+       <constructor-arg index="0" value="${mc.cloud.appName}" />
+       <constructor-arg index="1" value="${mc.poolname}" />
+       <constructor-arg index="2" value="${mc.compressEnable}" />
+       <constructor-arg index="3" value="${mc.compressThreshold}" />
+    </bean>
+</beans>

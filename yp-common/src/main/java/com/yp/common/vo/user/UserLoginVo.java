@@ -40,11 +40,6 @@ public class UserLoginVo implements Serializable{
 	 */
 	private Integer successNumLx;
 	/**
-	 * 上一次登录时间
-	 */
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
-	private java.util.Date preLoginTime;
-	/**
 	 * 最近一次成功登录时间
 	 */
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")  
@@ -115,12 +110,6 @@ public class UserLoginVo implements Serializable{
 	}
 	public Integer getSuccessNumLx() {
 		return this.successNumLx;
-	}
-	public void setPreLoginTime(java.util.Date value) {
-		this.preLoginTime = value;
-	}
-	public java.util.Date getPreLoginTime() {
-		return this.preLoginTime;
 	}
 	public void setLastSuccessTime(java.util.Date value) {
 		this.lastSuccessTime = value;

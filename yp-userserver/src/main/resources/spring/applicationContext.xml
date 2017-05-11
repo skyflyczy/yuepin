@@ -17,5 +17,5 @@
     <!-- 导入其他配置-->
     <import resource="classpath:spring/datasource.xml" />
     <import resource="classpath:spring/applicationContext-provider.xml" />
-
+<import resource="classpath:spring/applicationContext-memcached.xml" />
 </beans>

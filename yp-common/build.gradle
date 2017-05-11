@@ -18,6 +18,10 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
     compile group: 'org.springframework', name: 'spring-test', version: springVersion
     compile ('com.google.code.spring-crypto-utils:spring-crypto-utils:1.4.0')
+	
+	compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.7.2'
+	
+	compile ('org.apache.commons:commons-lang3:3.4')
 }
 
 project.libsDirName = 'libs/WEB-INF/lib'

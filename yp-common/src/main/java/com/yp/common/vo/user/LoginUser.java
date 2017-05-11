@@ -12,6 +12,7 @@ public class LoginUser implements Serializable{
 	private String password;//密码
 	private String validCode;//手机验证码
 	private LoginType loginType;
+	private String sessionId;//sessionId
 	
 	public String getPhoneNo() {
 		return phoneNo;
@@ -36,5 +37,11 @@ public class LoginUser implements Serializable{
 	}
 	public void setLoginType(LoginType loginType) {
 		this.loginType = loginType;
+	}
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

@@ -1,3 +1,5 @@
+import java.lang.invoke.LambdaForm.Compiled;
+
 dependencies {
 	//project
 	compile project(':yp-common')
@@ -13,6 +15,10 @@ dependencies {
     }
 	
     compile (group: 'com.101tec', name: 'zkclient', version: '0.8')
+	
+	//memcached
+	compile group: 'commons-pool', name: 'commons-pool', version: '1.6'
+	
 }
 
 project.libsDirName = 'libs/WEB-INF/lib'
